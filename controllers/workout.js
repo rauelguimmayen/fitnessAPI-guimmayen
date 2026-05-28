@@ -62,10 +62,15 @@ module.exports.getMyWorkouts = (req, res) => {
         .catch(error => res.status(500).send({ error: error.message }));
 };
 
-// PUT /workouts/updateWorkout/:workoutId
+// PATCH /workouts/updateWorkout/:workoutId
 module.exports.updateWorkout = (req, res) => {
     const { name, duration, status } = req.body;
     const { workoutId } = req.params;
+
+    // At least one field must be provided
+    if (!name && !duration && !status) {
+        return res.status(400).send({ error: "At least one field (name, duration, status) is required" });
+    }
 
     Workout.findOne({ userId: req.user.id })
         .then(result => {
@@ -73,23 +78,25 @@ module.exports.updateWorkout = (req, res) => {
                 return res.status(404).send({ error: "No workouts found" });
             }
 
-            // Find the specific workout entry in the array
             const workout = result.workout.id(workoutId);
             if (!workout) {
                 return res.status(404).send({ error: "Workout not found" });
             }
 
-            // Update only the fields that are provided
-            workout.name = name || workout.name;
-            workout.duration = duration || workout.duration;
-            workout.status = status || workout.status;
+            // Only update fields that are provided
+            if (name) workout.name = name;
+            if (duration) workout.duration = duration;
+            if (status) workout.status = status;
 
             return result.save();
         })
         .then(result => {
             const updatedWorkout = result.workout.id(req.params.workoutId).toObject();
             updatedWorkout.userId = result.userId;
-            res.status(200).send(updatedWorkout);
+            res.status(200).send({
+                message: "Workout updated successfully",
+                updatedWorkout
+            });
         })
         .catch(error => res.status(500).send({ error: error.message }));
 };

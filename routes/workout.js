@@ -12,7 +12,7 @@ router.post("/addWorkout", verify, workoutController.addWorkout);
 router.get('/getMyWorkouts', verify, workoutController.getMyWorkouts);
 
 // PUT /workouts/updateWorkout/:workoutId
-router.put("/updateWorkout/:workoutId", verify, workoutController.updateWorkout);
+router.patch("/updateWorkout/:workoutId", verify, workoutController.updateWorkout);
 
 // DELETE /workouts/deleteWorkout/:workoutId
 router.delete("/deleteWorkout/:workoutId", verify, workoutController.deleteWorkout);
