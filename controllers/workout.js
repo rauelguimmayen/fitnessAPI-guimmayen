@@ -47,7 +47,7 @@ module.exports.getMyWorkouts = (req, res) => {
     Workout.findOne({ userId: req.user.id })
         .then(result => {
             if (!result) {
-                return res.status(404).send({ error: "No workouts found" });
+                return res.status(200).send({ error: "No workouts found" });
             }
 
             // Map each workout entry to include userId from the parent document
