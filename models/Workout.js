@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const workoutSchema = new mongoose.Schema({
 
+    workout: [{
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',        
         required: true
-    },
-    workout: [{
+    },    
     name: {
         type: String,
         required: [true, 'Workout Name is Required']
@@ -23,7 +23,7 @@ const workoutSchema = new mongoose.Schema({
         default: 'pending',
         message: 'Value is not supported, select "completed", "pending", or "in progress"'
         }
-		},
+        },
     dateAdded: {
         type: Date,
         default: Date.now
