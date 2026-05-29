@@ -17,4 +17,7 @@ router.patch("/updateWorkout/:workoutId", verify, workoutController.updateWorkou
 // DELETE /workouts/deleteWorkout/:workoutId
 router.delete("/deleteWorkout/:workoutId", verify, workoutController.deleteWorkout);
 
+// PATCH  /workouts/completeWorkoutStatus/:workoutId
+router.patch("/completeWorkoutStatus/:workoutId", verify, workoutController.completeWorkoutStatus);
+
 module.exports = router;
