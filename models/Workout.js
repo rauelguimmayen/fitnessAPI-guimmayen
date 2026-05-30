@@ -16,10 +16,6 @@ const workoutSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: {
-      values: ["Completed", "Pending", "In Progress"],
-      message: 'Value is not supported, select "Completed", "Pending", or "In Progress"',
-    },
     default: "Pending",
   },
   dateAdded: {
